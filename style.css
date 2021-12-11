@@ -6,18 +6,20 @@
 	*/
 	--neutralLight: hsl(243, 10%, 90%);
 	--neutralDark: hsl(243, 10%, 10%);
-	--primary: hsl(243, 90%, 70%);
-	--accent: hsl(63, 90%, 70%);
+	--primary: hsl(243, 50%, 30%);
+	--accent: hsl(63, 70%, 60%);
 
 	font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
 * {
 /* 	outline: red dashed 1px; */
+	color: var(--neutralDark);
 }
 
 body {
 	display: flex;
+	flex-flow: column nowrap;
 	justify-content: center;
 	align-items: center;
 
@@ -26,15 +28,25 @@ body {
 	background-color: var(--neutralLight);
 }
 
+.title {
+	font-family: 'Oswald', Arial, Helvetica, sans-serif;
+	margin: 0;
+}
+
+.desc {
+	margin-top: 0.5em;
+	margin-bottom: 3em
+}
+
 .calc {
 	display: flex;
 	flex-flow: column nowrap;
 
-	width: 400px;
-	height: 500px;
+	width: 350px;
+	height: 400px;
 
 	background-color: var(--neutralDark);
-	box-shadow: 3px 3px 5px gray;
+	box-shadow: 3px 3px 5px black;
 	border: 1px solid var(--neutralDark);
 	border-radius: 5px;
 }
@@ -48,9 +60,14 @@ body {
 	height: 150px;
 	padding: 0 2em;
 	
-	background-color: var(--primary);
-	color: white;
+	background-color: var(--neutralLight);
+	color: black;
 	border-radius: 5px 5px 0 0;
+}
+
+.display__output {
+	font-size: 2em;
+	font-weight: bolder;
 }
 
 .buttons {
@@ -68,39 +85,49 @@ body {
 	background-color: var(--neutralDark);
 }
 
+.buttons__clear,
+.buttons__equals,
+.buttons__operator,
+.buttons__zero, 
+.nums,
+.nums_rows {
+	display: flex;
+}
+
+.nums_rows,
+.btn {
+	flex-grow: 1;
+}
+
 .buttons__clear {
 	grid-area: a;
 	
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	display: flex;
 }
 
-.buttons__nums {
+.nums {
 	grid-area: n;
 	
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	flex-flow: column-reverse nowrap;
 }
 
 .buttons__operator {
 	grid-area: b;
 	
-	display: grid;
-	grid-template-columns: 1fr;
-	grid-template-rows: repeat(4, 1fr)
+	display: flex;
+	flex-flow: column nowrap;
 }
 
 .buttons__zero {
 	grid-area: c;
 	
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	display: flex;
 }
 
 .buttons__equals {
 	grid-area: e;
 	
-	display: grid;
+	display: flex;
 }
 
 .btn {
