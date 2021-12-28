@@ -81,6 +81,8 @@ body {
 		"n n n b"
 		"n n n b"
 		"c c e e";
+
+	height: 100%;
 	
 	background-color: var(--neutralDark);
 }

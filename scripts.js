@@ -27,71 +27,52 @@ function buttonControl() {
 	let string = this.innerText;
 
 	// number input
-	if (string.match(/[0-9\.]/)) {
-		if (operatorClicked) {
-			operatorClicked = false;
-			display.innerText = '';
-			return populateDisplay(string);
-		} else {
-			return populateDisplay(string);
-		}
-	}
+	if (string.match(/[0-9\.]/)) return populateDisplay(string);
 
 	// input manipulation
-	switch(string) {
-		case '+/-': return changeSign();
-		case 'C': return backspace();
-		case 'AC': return clearAll();
-	}
+	if (string.match(/^(±|C|AC)$/)) return manipulateInput(string);
 
 	// operator buttons
-	if (string.match(/[+-×/=]/)) return handleOperation(string);
+	if (string.match(/^[+-×/=]$/)) return handleOperation(string);
 }
 
 function populateDisplay(key) {
 	display.innerText += key;
 }
 
-function changeSign() {
-	if (Number(display.innerText) < 0) {
-		display.innerText = display.innerText.slice(1);
-	} else {
-		display.innerHTML = '-' + display.innerText;
+function manipulateInput(key) {
+	switch(key) {
+		case '±': return changeSign();
+		case 'C': return backspace();
+		case 'AC': return clearAll();
 	}
-	console.log('changeSign')
+}
+
+function changeSign() {
+	if (display.innerText[0] === '-') {
+		display.innerText = display.innerText.slice(1);
+	} else if (!display.innerText.length) {
+		display.innerText = '-';
+	} else if (display.innerText) {
+		display.innerText = '-' + display.innerText;
+	}
 }
 
 function backspace() {
 	display.innerText = display.innerText.slice(0, display.innerText.length - 1);
-	console.log('backspace')
 }
 
 function clearAll() {
 	display.innerText = '';
-	firstNum = "";
-	secondNum = "";
-	symbol = "";
-	console.log('clearAll')
 }
 
-function handleOperation(sym) {
-	operatorClicked = true;
-	if (!symbol) {
-		firstNum = display.innerText;
-		symbol = sym;
-	} else {
-		secondNum = display.innerText;
-		result = operate(symbol, firstNum, secondNum);
-		console.log(result);
-	}
-}
+function handleOperation(key) {
 
+}
 
 const buttons = document.querySelectorAll('.btn');
-const display = document.querySelector('.display__output');
-let firstNum, secondNum, symbol, operatorClicked, result;
-
-
 buttons.forEach(button => {
 	button.addEventListener('click', buttonControl)
 })
+
+const display = document.querySelector('.display__output');
