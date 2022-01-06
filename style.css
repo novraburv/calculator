@@ -1,4 +1,158 @@
-* {
-	outline: red dashed 1px;
+:root {
+	/*
+	Color scheme variable based on hues listed below.
+	-- primary on hue 243
+	-- accent on hue 63
+	*/
+	--neutralLight: hsl(243, 10%, 90%);
+	--neutralDark: hsl(243, 10%, 10%);
+	--primary: hsl(243, 50%, 30%);
+	--accent: hsl(63, 70%, 60%);
+
 	font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+}
+
+* {
+/* 	outline: red dashed 1px; */
+	color: var(--neutralDark);
+}
+
+body {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+
+	height: 100vh;
+
+	background-color: var(--neutralLight);
+}
+
+.title {
+	font-family: 'Oswald', Arial, Helvetica, sans-serif;
+	margin: 0;
+}
+
+.desc {
+	margin-top: 0.5em;
+	margin-bottom: 3em
+}
+
+.calc {
+	display: flex;
+	flex-flow: column nowrap;
+
+	width: 350px;
+	height: 400px;
+
+	background-color: var(--neutralDark);
+	box-shadow: 3px 3px 5px black;
+	border: 1px solid var(--neutralDark);
+	border-radius: 5px;
+}
+
+.display {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-evenly;
+	align-items: flex-end;
+	
+	height: 5em;
+	padding: 0 2em;
+	
+	background-color: var(--neutralLight);
+	color: black;
+	border-radius: 5px 5px 0 0;
+}
+
+.display__output {
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 2em;
+	font-weight: bolder;
+}
+
+.buttons {
+	flex-grow: 1;
+	
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-areas: 
+		"a a a b"
+		"n n n b"
+		"n n n b"
+		"n n n b"
+		"c c e e";
+
+	height: 100%;
+	
+	background-color: var(--neutralDark);
+}
+
+.buttons__clear,
+.buttons__equals,
+.buttons__operator,
+.buttons__zero, 
+.nums,
+.nums_rows {
+	display: flex;
+}
+
+.nums_rows,
+.btn {
+	flex-grow: 1;
+}
+
+.buttons__clear {
+	grid-area: a;
+	
+	display: flex;
+}
+
+.nums {
+	grid-area: n;
+	
+	flex-flow: column-reverse nowrap;
+}
+
+.buttons__operator {
+	grid-area: b;
+	
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+.buttons__zero {
+	grid-area: c;
+	
+	display: flex;
+}
+
+.buttons__equals {
+	grid-area: e;
+	
+	display: flex;
+}
+
+.btn {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	border: none;
+	
+	background-color: transparent;
+	color: white;
+}
+
+.btn:hover {
+	background-color: var(--primary);
+	color: white;
+}
+
+.btn-comma {
+	border-bottom-left-radius: 5px;
+}
+
+.btn-equals {
+	border-bottom-right-radius: 5px;
+  background-color: var(--accent);
+	color: black;
 }
