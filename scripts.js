@@ -24,7 +24,7 @@ function operate(operator, num1, num2) {
 }
 
 function buttonControl() {
-	let string = this.innerText;
+	let string = this.textContent;
 
 	// number input
 	if (string.match(/[0-9\.]/)) return populateDisplay(string);
@@ -33,11 +33,25 @@ function buttonControl() {
 	if (string.match(/^(±|C|AC)$/)) return manipulateInput(string);
 
 	// operator buttons
-	if (string.match(/^[+-×/=]$/)) return handleOperation(string);
+	if (string.match(/^[+-×/]$/)) return handleOperation(string);
+
+	// show result
+	if (string.match('=')) {
+		evaluate();
+		needReset = true;
+		currNumber = 0;
+		return;
+	}
 }
 
 function populateDisplay(key) {
-	display.innerText += key;
+	
+	resetDisplay();
+
+	if (display.textContent === '0') display.textContent = '';
+	if (display.textContent.match(/\./) && key === '.') return;
+
+	display.textContent += key;
 }
 
 function manipulateInput(key) {
@@ -49,26 +63,52 @@ function manipulateInput(key) {
 }
 
 function changeSign() {
-	if (display.innerText[0] === '-') {
-		display.innerText = display.innerText.slice(1);
-	} else if (!display.innerText.length) {
-		display.innerText = '-';
-	} else if (display.innerText) {
-		display.innerText = '-' + display.innerText;
+	if (display.textContent[0] === '-') {
+		display.textContent = display.textContent.slice(1);
+	} else if (!display.textContent.length) {
+		display.textContent = '-';
+	} else if (display.textContent) {
+		display.textContent = '-' + display.textContent;
 	}
 }
 
 function backspace() {
-	display.innerText = display.innerText.slice(0, display.innerText.length - 1);
+	display.textContent = display.textContent.slice(0, display.textContent.length - 1);
 }
 
 function clearAll() {
-	display.innerText = '';
+	display.textContent = '0';
+	currNumber = 0;
+	nextNumber = 0;
+	symbol = '';
+}
+
+function resetDisplay() {
+	if (needReset) {
+		display.textContent = '0';
+		needReset = false;
+	}
 }
 
 function handleOperation(key) {
+	if (symbol) evaluate();
 
+	currNumber = Number(display.textContent);
+	symbol = key;
+	needReset = true;
 }
+
+function evaluate() {
+	if (needReset || symbol === '=') return;
+
+	nextNumber = Number(display.textContent);
+	display.textContent = (Math.round(operate(symbol, currNumber, nextNumber) * 1000) / 1000).toString();
+}
+
+let needReset;
+let currNumber;
+let nextNumber;
+let symbol;
 
 const buttons = document.querySelectorAll('.btn');
 buttons.forEach(button => {
